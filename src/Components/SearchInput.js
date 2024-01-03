@@ -457,24 +457,20 @@
 // export default SearchInput;
 
 
-//attaching navigation bar
+
+//Tamil Hacks Method
 import React from 'react';
-import Axios from 'axios';
-import ImageList from './ImageList';
 class SearchInput extends React.Component{
     constructor(props){
         super(props)
-        this.state={entry : '', images: []}//[] used because images in a array
+        this.state={entry : ''}
         this.onFormSubmit=this.onFormSubmit.bind(this)// used to use (this) outside constructor. 
         //but (this) can be used ine render without using .bind function
     }
 
-   async onFormSubmit(x){
+ onFormSubmit(x){
         x.preventDefault();
-        const response= await Axios.get(`https://pixabay.com/api/?key=41404523-079e75d2701a0f5e7d2eed67a&q=${this.state.entry}&image_type=photo&pretty=true`)
-        console.log(this.state.entry)
-        console.log(response.data.hits)
-        this.setState({images: response.data.hits})
+       this.props.onSearch(this.state.entry)
     }
 
     render(){
@@ -493,11 +489,9 @@ class SearchInput extends React.Component{
                                  ></input>
                                 <i className='search icon'></i>
                              </div>
-                             <div>we currently have {this.state.images.length} images</div>
                         </div>
                     </form>
                 </div>
-                <ImageList imgs={this.state.images}></ImageList>
             </div>
         
         )
